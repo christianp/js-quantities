@@ -103,41 +103,41 @@ describe("js-quantities", function() {
     it("should not create temperatures below absolute zero", function() {
       expect(function() {
         Qty("-1 tempK");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
       expect(function() {
         Qty("-273.16 tempC");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
       expect(function() {
         Qty("-459.68 tempF");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
       expect(function() {
         Qty("-1 tempR");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
 
       var qty = Qty("1 tempK");
       expect(function() {
         qty.mul("-1");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
 
       qty = Qty("0 tempK");
       expect(function() {
         qty.sub("1 degK");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
 
       qty = Qty("-273.15 tempC");
       expect(function() {
         qty.sub("1 degC");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
 
       qty = Qty("-459.67 tempF");
       expect(function() {
         qty.sub("1 degF");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
 
       qty = Qty("0 tempR");
       expect(function() {
         qty.sub("1 degR");
-      }).toThrow("Temperatures must not be less than absolute zero");
+      }).toThrowError("Temperatures must not be less than absolute zero");
     });
 
     it("should create simple", function() {
@@ -253,40 +253,40 @@ describe("js-quantities", function() {
       // See github issue #73
       expect(function() {
         Qty("593720475cm^4939207503");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("593720475cm**4939207503");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
     });
 
     it("should throw 'Unit not recognized' error when initializing with an invalid unit", function() {
       expect(function() {
         Qty("aa");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("m/aa");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("m-");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("N*m");
-      }).not.toThrow("Unit not recognized");
+      }).not.toThrowError("Unit not recognized");
       // mm is millimeter, but mmm is not a valid unit
       expect(function() {
         Qty("mmm");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       // previously this value caused infinitely long regex test when checking if unit is correct
       expect(function() {
         Qty("0.11 180°/sec");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       // Crash-causing strings, See github issue #73
       expect(function() {
         Qty("58261da44b642352442b8060");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("A1EB12B4233021311SH");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
     });
 
     if (typeof window === "undefined") { // only test in node.js
@@ -309,8 +309,8 @@ describe("js-quantities", function() {
     it("should throw error when passing a null value", function() {
       expect(function() {
         Qty(null);
-      }).toThrow("Only string, number or quantity accepted as single " +
-                 "initialization value");
+      }).toThrowError("Only string, number or quantity accepted as single " +
+                      "initialization value");
     });
 
     it("should throw error when passing NaN", function() {
@@ -318,17 +318,17 @@ describe("js-quantities", function() {
         function() {
           Qty(NaN);
         }
-             ).toThrow("Only string, number or quantity accepted as single " +
-                       "initialization value");
+             ).toThrowError("Only string, number or quantity accepted as single " +
+                            "initialization value");
     });
 
     it("should throw 'Unit not recognized' error when initializing with an invalid unit and a 0 exponent", function() {
       expect(function() {
         Qty("3p0");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
       expect(function() {
         Qty("3p-0");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
     });
 
     it("should set baseScalar", function() {
@@ -363,7 +363,7 @@ describe("js-quantities", function() {
        "with no scalar", function() {
       expect(function() {
         Qty("-m");
-      }).toThrow("Unit not recognized");
+      }).toThrowError("Unit not recognized");
     });
   });
 
@@ -543,7 +543,7 @@ describe("js-quantities", function() {
       qty = Qty("0 ohm");
       expect(function() {
         qty.inverse();
-      }).toThrow("Divide by zero");
+      }).toThrowError("Divide by zero");
 
       qty = Qty("10 ohm").inverse();
       result = qty.to("S");
@@ -590,7 +590,7 @@ describe("js-quantities", function() {
       expect(qty1.compareTo(qty3)).toEqual(0);
       expect(function() {
         qty1.compareTo(qty4);
-      }).toThrow("Incompatible units: cm and A");
+      }).toThrowError("Incompatible units: cm and A");
 
       expect(qty1.lt(qty2)).toBe(false);
       expect(qty1.lt(qty3)).toBe(false);
@@ -667,10 +667,10 @@ describe("js-quantities", function() {
       var qty2 = Qty("2s");
       expect(function() {
         qty1.add(qty2);
-      }).toThrow("Incompatible units: m and s");
+      }).toThrowError("Incompatible units: m and s");
       expect(function() {
         qty2.add(qty1);
-      }).toThrow("Incompatible units: s and m");
+      }).toThrowError("Incompatible units: s and m");
     });
 
     it("should fail to add inverse quantities", function() {
@@ -678,19 +678,19 @@ describe("js-quantities", function() {
       var qty2 = qty1.inverse();
       expect(function() {
         qty1.add(qty2);
-      }).toThrow("Incompatible units: S and 1/S");
+      }).toThrowError("Incompatible units: S and 1/S");
       expect(function() {
         qty2.add(qty1);
-      }).toThrow("Incompatible units: 1/S and S");
+      }).toThrowError("Incompatible units: 1/S and S");
 
       qty1 = Qty("10S");
       qty2 = Qty("0.1ohm");
       expect(function() {
         qty1.add(qty2);
-      }).toThrow("Incompatible units: S and Ohm");
+      }).toThrowError("Incompatible units: S and Ohm");
       expect(function() {
         qty2.add(qty1);
-      }).toThrow("Incompatible units: Ohm and S");
+      }).toThrowError("Incompatible units: Ohm and S");
     });
 
     it("should subtract quantities", function() {
@@ -716,10 +716,10 @@ describe("js-quantities", function() {
       var qty2 = Qty("2s");
       expect(function() {
         qty1.sub(qty2);
-      }).toThrow("Incompatible units: m and s");
+      }).toThrowError("Incompatible units: m and s");
       expect(function() {
         qty2.sub(qty1);
-      }).toThrow("Incompatible units: s and m");
+      }).toThrowError("Incompatible units: s and m");
     });
 
     it("should fail to subtract inverse quantities", function() {
@@ -727,19 +727,19 @@ describe("js-quantities", function() {
       var qty2 = qty1.inverse();
       expect(function() {
         qty1.sub(qty2);
-      }).toThrow("Incompatible units: S and 1/S");
+      }).toThrowError("Incompatible units: S and 1/S");
       expect(function() {
         qty2.sub(qty1);
-      }).toThrow("Incompatible units: 1/S and S");
+      }).toThrowError("Incompatible units: 1/S and S");
 
       qty1 = Qty("10S");
       qty2 = Qty("0.1ohm");
       expect(function() {
         qty1.sub(qty2);
-      }).toThrow("Incompatible units: S and Ohm");
+      }).toThrowError("Incompatible units: S and Ohm");
       expect(function() {
         qty2.sub(qty1);
-      }).toThrow("Incompatible units: Ohm and S");
+      }).toThrowError("Incompatible units: Ohm and S");
     });
 
     it("should multiply quantities", function() {
@@ -851,11 +851,11 @@ describe("js-quantities", function() {
 
       expect(function() {
         qty1.div(qty3);
-      }).toThrow("Divide by zero");
+      }).toThrowError("Divide by zero");
       expect(function() {
         qty1.div(0);
-      }).toThrow("Divide by zero");
-      expect(qty3.div(qty1).scalar).toEqual(n(0));
+      }).toThrowError("Divide by zero");
+      expect(qty3.div(qty1).scalar).toBe(n(0));
 
       var result = qty1.div(qty2);
       expect(result.scalar).toEqual(div(n(2.5), n(3)));
@@ -963,10 +963,10 @@ describe("js-quantities", function() {
       var qty = Qty("2tempC");
       expect(function() {
         qty.add("1 tempF");
-      }).toThrow("Cannot add two temperatures");
+      }).toThrowError("Cannot add two temperatures");
       expect(function() {
         qty.add("1 tempC");
-      }).toThrow("Cannot add two temperatures");
+      }).toThrowError("Cannot add two temperatures");
     });
 
     it("should add temperatures to degrees", function() {
@@ -1029,10 +1029,10 @@ describe("js-quantities", function() {
       var qty = Qty("2degC");
       expect(function() {
         qty.sub("1 tempF");
-      }).toThrow("Cannot subtract a temperature from a differential degree unit");
+      }).toThrowError("Cannot subtract a temperature from a differential degree unit");
       expect(function() {
         qty.sub("1 tempC");
-      }).toThrow("Cannot subtract a temperature from a differential degree unit");
+      }).toThrowError("Cannot subtract a temperature from a differential degree unit");
     });
 
     it("should multiply temperature degrees", function() {
@@ -1061,13 +1061,13 @@ describe("js-quantities", function() {
       var qty = Qty("2tempF");
       expect(function() {
         qty.mul("1 tempC");
-      }).toThrow("Cannot multiply by temperatures");
+      }).toThrowError("Cannot multiply by temperatures");
       expect(function() {
         qty.mul("1 degC");
-      }).toThrow("Cannot multiply by temperatures");
+      }).toThrowError("Cannot multiply by temperatures");
       expect(function() {
         Qty("1 tempC*s");
-      }).toThrow("Cannot multiply by temperatures");
+      }).toThrowError("Cannot multiply by temperatures");
 
       var result = qty.mul(2);
       expect(result.scalar).toEqual(n(4));
@@ -1107,11 +1107,11 @@ describe("js-quantities", function() {
 
       expect(function() {
         qty.div("0 degF");
-      }).toThrow("Divide by zero");
+      }).toThrowError("Divide by zero");
       expect(function() {
         qty.div(0);
-      }).toThrow("Divide by zero");
-      expect(Qty("0 degF").div(qty).scalar).toEqual(n(0));
+      }).toThrowError("Divide by zero");
+      expect(Qty("0 degF").div(qty).scalar).toBe(n(0));
       expect(Qty("0 degF").div(qty).units()).toBe("");
 
       var result = qty.div("3 degF");
@@ -1133,24 +1133,24 @@ describe("js-quantities", function() {
     it("should not divide with temperatures except by scalar", function() {
       expect(function() {
         Qty("tempF").div("1 tempC");
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
       expect(function() {
         Qty("tempF").div("1 degC");
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
       expect(function() {
         Qty("2").div("tempF");
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
       expect(function() {
         Qty("2 tempF/s");
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
       expect(function() {
         Qty("2 s/tempF");
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
 
       // inverse is division: 1/x
       expect(function() {
         Qty("tempF").inverse();
-      }).toThrow("Cannot divide with temperatures");
+      }).toThrowError("Cannot divide with temperatures");
 
       var result = Qty("4 tempF").div(2);
       expect(result.scalar).toEqual(n(2));
@@ -1222,13 +1222,13 @@ describe("js-quantities", function() {
       expect(qty.toString("km")).toBe("0.002 km");
       expect(function() {
         qty.toString("A");
-      }).toThrow("Incompatible units: m and A");
+      }).toThrowError("Incompatible units: m and A");
 
       qty = Qty("24.5m/s");
       expect(qty.toString()).toBe("24.5 m/s");
       expect(function() {
         qty.toString("m");
-      }).toThrow("Incompatible units: m/s and m");
+      }).toThrowError("Incompatible units: m/s and m");
       expect(qty.toString("km/h")).toBe("88.2 km/h");
 
       qty = Qty("254kg/m^2");
@@ -1412,13 +1412,13 @@ describe("js-quantities", function() {
     it("should throw if parsed argument is not a string", function() {
       expect(function() {
         Qty.parse(5);
-      }).toThrow("Argument should be a string");
+      }).toThrowError("Argument should be a string");
     });
 
     it("should not throw if parsed argument is a string", function() {
       expect(function() {
         Qty.parse("foo");
-      }).not.toThrow("Argument should be a string");
+      }).not.toThrowError("Argument should be a string");
     });
 
     it("should return parsed quantity when passing a valid quantity", function() {
@@ -1430,7 +1430,9 @@ describe("js-quantities", function() {
     });
 
     it("should work", function() {
-      Qty.parse("VL170111115924");
+      expect(function() {
+        Qty.parse("VL170111115924");
+      }).not.toThrow();
     });
   });
 
@@ -1442,7 +1444,7 @@ describe("js-quantities", function() {
     it("should throw when passing incompatible units", function() {
       expect(function() {
         Qty.swiftConverter("m", "s");
-      }).toThrow("Incompatible units: m and s");
+      }).toThrowError("Incompatible units: m and s");
     });
 
     describe("converter", function() {
@@ -1511,7 +1513,7 @@ describe("js-quantities", function() {
     it("should throw unknown kind", function() {
       expect(function() {
         Qty.getUnits("bogusKind");
-      }).toThrow("Kind not recognized");
+      }).toThrowError("Kind not recognized");
     });
   });
 
