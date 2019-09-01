@@ -136,8 +136,10 @@ assign(Qty.prototype, {
       throw new QtyError("Divide by zero");
     }
 
-    var precRoundedResult = Field.mulSafe(Field.round(Field.div(this.scalar, precQuantity.scalar)),
-                                       precQuantity.scalar);
+    var precRoundedResult = Field.mulSafe(Field.round(
+        Field.div(this.scalar, precQuantity.scalar)),
+        precQuantity.scalar
+    );
 
     return Qty(precRoundedResult, this.units());
   }
@@ -187,9 +189,7 @@ export function swiftConverter(srcUnits, dstUnits) {
   }
 
   return function converter(value) {
-    var i,
-        length,
-        result;
+    var i, length, result;
     if (!Array.isArray(value)) {
       return convert(value);
     }
@@ -206,7 +206,7 @@ export function swiftConverter(srcUnits, dstUnits) {
 
 var baseUnitCache = {};
 
-function toBaseUnits (numerator,denominator) {
+function toBaseUnits(numerator,denominator) {
   var num = [];
   var den = [];
   var q = Field.one();

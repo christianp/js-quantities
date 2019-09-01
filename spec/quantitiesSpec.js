@@ -296,7 +296,8 @@ describe("js-quantities", function() {
         require("./blns.json").forEach(function(s) {
           try {
             Qty(s);
-          } catch (e) {}
+          }
+          catch (e) {}
         });
       });
     }
@@ -318,8 +319,8 @@ describe("js-quantities", function() {
         function() {
           Qty(NaN);
         }
-             ).toThrowError("Only string, number or quantity accepted as single " +
-                            "initialization value");
+      ).toThrowError("Only string, number or quantity accepted as single " +
+                     "initialization value");
     });
 
     it("should throw 'Unit not recognized' error when initializing with an invalid unit and a 0 exponent", function() {
@@ -566,8 +567,8 @@ describe("js-quantities", function() {
     });
 
     it("should be cached", function() {
-      var qty = Qty("100 m"),
-          converted = qty.to("ft");
+      var qty = Qty("100 m");
+      var converted = qty.to("ft");
 
       expect(qty.to("ft") === converted).toBe(true);
     });
@@ -1478,9 +1479,9 @@ describe("js-quantities", function() {
 
       describe("array of values", function() {
         it("should be converted", function() {
-          var converter = Qty.swiftConverter("MPa", "bar"),
-              values = [n(250), n(10), n(15)],
-              expected = [n(2500), n(100), n(150)];
+          var converter = Qty.swiftConverter("MPa", "bar");
+          var values = [n(250), n(10), n(15)];
+          var expected = [n(2500), n(100), n(150)];
 
           expect(converter(values)).toEqual(expected);
         });

@@ -286,6 +286,7 @@ export var UNITY_ARRAY = [UNITY];
  * @param {string} unitDef - Name of unit to test
  * @param {Object} definition - Definition of unit to test
  *
+ * @returns {void}
  * @throws {QtyError} if unit definition is not valid
  */
 function validateUnitDefinition(unitDef, definition) {
@@ -344,11 +345,11 @@ for (var unitDef in UNITS) {
 /**
  * Returns a list of available units of kind
  *
- * @param {string} [kind]
+ * @param {string} [kind] - kind of units
  * @returns {array} names of units
  * @throws {QtyError} if kind is unknown
  */
-export function getUnits (kind) {
+export function getUnits(kind) {
   var i;
   var units = [];
   var unitKeys = Object.keys(UNITS);
@@ -384,7 +385,7 @@ export function getUnits (kind) {
 /**
  * Returns a list of alternative names for a unit
  *
- * @param {string} unitName
+ * @param {string} unitName - name of unit
  * @returns {string[]} aliases for unit
  * @throws {QtyError} if unit is unknown
  */
