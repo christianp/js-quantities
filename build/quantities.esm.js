@@ -2429,6 +2429,6 @@ function simplify(units) {
   });
 }
 
-Qty.version = "1.7.4";
+Qty.version = "1.7.5";
 
 export default Qty;
