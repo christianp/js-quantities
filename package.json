@@ -37,12 +37,10 @@
   "bugs": {
     "url": "https://github.com/gentooboontoo/js-quantities/issues"
   },
-  "devDependencies": {
-    "eslint": "^6.3.0",
-    "jasmine": "3.x",
-    "rollup": "~0.57"
-  },
   "dependencies": {
     "decimal.js": "^10.1.1"
+    "eslint": "^6.8.0",
+    "jasmine": "^3.5.0",
+    "rollup": "2.x"
   }
 }
