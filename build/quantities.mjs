@@ -522,9 +522,9 @@ var UNITS = {
   "<tablespoon>":  [["tb","tbsp","tbs","tablespoon","tablespoons"], n(1.47867648e-5), "volume", ["<meter>","<meter>","<meter>"]],
   "<teaspoon>":  [["tsp","teaspoon","teaspoons"], n(4.92892161e-6), "volume", ["<meter>","<meter>","<meter>"]],
   "<bushel>":  [["bu","bsh","bushel","bushels"], n(0.035239072), "volume", ["<meter>","<meter>","<meter>"]],
-  "<oilbarrel>":  [["bbl","oil-barrel","oil-barrels"], n(0.158987294928), "volume", ["<meter>","<meter>","<meter>"]],
-  "<beerbarrel>":  [["bl","bl-us","beer-barrel","beer-barrels"], n(0.1173477658), "volume", ["<meter>","<meter>","<meter>"]],
-  "<beerbarrel-imp>":  [["blimp","bl-imp","beer-barrel-imp","beer-barrels-imp"], n(0.16365924), "volume", ["<meter>","<meter>","<meter>"]],
+  "<oilbarrel>":  [["bbl","oilbarrel", "oilbarrels", "oil-barrel","oil-barrels"], n(0.158987294928), "volume", ["<meter>","<meter>","<meter>"]],
+  "<beerbarrel>":  [["bl","bl-us","beerbarrel", "beerbarrels", "beer-barrel","beer-barrels"], n(0.1173477658), "volume", ["<meter>","<meter>","<meter>"]],
+  "<beerbarrel-imp>":  [["blimp","bl-imp","beerbarrel-imp", "beerbarrels-imp", "beer-barrel-imp","beer-barrels-imp"], n(0.16365924), "volume", ["<meter>","<meter>","<meter>"]],
 
   /* speed */
   "<kph>" : [["kph"], n(0.277777778), "speed", ["<meter>"], ["<second>"]],
@@ -534,6 +534,7 @@ var UNITS = {
 
   /* acceleration */
   "<gee>" : [["gee"], n(9.80665), "acceleration", ["<meter>"], ["<second>","<second>"]],
+  "<Gal>" : [["Gal"], n(1e-2), "acceleration", ["<meter>"], ["<second>","<second>"]],
 
   /* temperature_difference */
   "<kelvin>" : [["degK","kelvin"], n(1.0), "temperature", ["<kelvin>"]],
@@ -2429,6 +2430,6 @@ function simplify(units) {
   });
 }
 
-Qty.version = "1.7.5";
+Qty.version = "1.7.6";
 
 export default Qty;
