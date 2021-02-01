@@ -582,8 +582,8 @@ SOFTWARE.
     "<mole>"  :  [["mol","mole"], n(1.0), "substance", ["<mole>"]],
 
     /* concentration */
-    "<molar>" : [["M","molar"], n(1000), "concentration", ["<mole>"], ["<meter>","<meter>","<meter>"]],
-    "<wtpercent>"  : [["wt%","wtpercent"], n(10), "concentration", ["<kilogram>"], ["<meter>","<meter>","<meter>"]],
+    "<molar>" : [["M","molar"], n(1000), "molar_concentration", ["<mole>"], ["<meter>","<meter>","<meter>"]],
+    "<wtpercent>"  : [["wt%","wtpercent"], n(10), "molar_concentration", ["<kilogram>"], ["<meter>","<meter>","<meter>"]],
 
     /* activity */
     "<katal>" :  [["kat","katal","Katal"], n(1.0), "activity", ["<mole>"], ["<second>"]],
