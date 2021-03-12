@@ -501,7 +501,7 @@ SOFTWARE.
     "<dalton>" : [["Da","Dalton","Daltons","dalton","daltons"], n(1.660538921e-27), "mass", ["<kilogram>"]],
     "<slug>" : [["slug","slugs"], n(14.5939029), "mass", ["<kilogram>"]],
     "<short-ton>" : [["tn","ton","short-ton"], n(907.18474), "mass", ["<kilogram>"]],
-    "<metric-ton>":[["tonne","metric-ton"], n(1000), "mass", ["<kilogram>"]],
+    "<metric-ton>":[["t","tonne","metric-ton"], n(1000), "mass", ["<kilogram>"]],
     "<carat>" : [["ct","carat","carats"], n(0.0002), "mass", ["<kilogram>"]],
     "<pound>" : [["lbs","lb","pound","pounds","#"], n(0.45359237), "mass", ["<kilogram>"]],
     "<ounce>" : [["oz","ounce","ounces"], n(0.0283495231), "mass", ["<kilogram>"]],
@@ -700,7 +700,9 @@ SOFTWARE.
     "<dozen>" :  [["doz","dz","dozen"],n(12.0),"prefix_only", ["<each>"]],
     "<percent>": [["%","percent"], n(0.01), "prefix_only", ["<1>"]],
     "<ppm>" :  [["ppm"],n(1e-6), "prefix_only", ["<1>"]],
-    "<ppt>" :  [["ppt"],n(1e-9), "prefix_only", ["<1>"]],
+    "<ppb>" :  [["ppb"],n(1e-9), "prefix_only", ["<1>"]],
+    "<ppt>" :  [["ppt"],n(1e-12), "prefix_only", ["<1>"]],
+    "<ppq>" :  [["ppq"],n(1e-15), "prefix_only", ["<1>"]],
     "<gross>" :  [["gr","gross"],n(144.0), "prefix_only", ["<dozen>","<dozen>"]],
     "<decibel>"  : [["dB","decibel","decibels"], n(1.0), "logarithmic", ["<decibel>"]]
   };
