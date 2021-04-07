@@ -269,7 +269,9 @@ export var UNITS = {
   "<dozen>" :  [["doz","dz","dozen"],n(12.0),"prefix_only", ["<each>"]],
   "<percent>": [["%","percent"], n(0.01), "prefix_only", ["<1>"]],
   "<ppm>" :  [["ppm"],n(1e-6), "prefix_only", ["<1>"]],
-  "<ppt>" :  [["ppt"],n(1e-9), "prefix_only", ["<1>"]],
+  "<ppb>" :  [["ppb"],n(1e-9), "prefix_only", ["<1>"]],
+  "<ppt>" :  [["ppt"],n(1e-12), "prefix_only", ["<1>"]],
+  "<ppq>" :  [["ppq"],n(1e-15), "prefix_only", ["<1>"]],
   "<gross>" :  [["gr","gross"],n(144.0), "prefix_only", ["<dozen>","<dozen>"]],
   "<decibel>"  : [["dB","decibel","decibels"], n(1.0), "logarithmic", ["<decibel>"]]
 };
