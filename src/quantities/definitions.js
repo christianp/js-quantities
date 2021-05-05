@@ -164,6 +164,7 @@ export var UNITS = {
   /* charge */
   "<coulomb>" :  [["C","coulomb","Coulomb"], n(1.0), "charge", ["<ampere>","<second>"]],
   "<Ah>" :  [["Ah"], n(3600), "charge", ["<ampere>","<second>"]],
+  "<elementary-charge>" :  [["e"], n(1.602176634e-19), "charge", ["<ampere>","<second>"]],
 
   /* current */
   "<ampere>"  :  [["A","Ampere","ampere","amp","amps"], n(1.0), "current", ["<ampere>"]],
