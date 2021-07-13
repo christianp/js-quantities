@@ -199,6 +199,7 @@ export var UNITS = {
   "<Calorie>" :  [["Cal","Calorie","Calories"], n(4184.00), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
   "<therm-US>" : [["th","therm","therms","Therm","therm-US"], n(105480400), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
   "<Wh>" : [["Wh"], n(3600), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
+  "<electronvolt>" : [["eV", "electronvolt", "electronvolts"], n(1.602176634E-19), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
 
   /* force */
   "<newton>"  : [["N","Newton","newton"], n(1.0), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
