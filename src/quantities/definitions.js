@@ -212,6 +212,8 @@ export var UNITS = {
   /* angle */
   "<radian>" :[["rad","radian","radians"], n(1.0), "angle", ["<radian>"]],
   "<degree>" :[["deg","degree","degrees"], div(PI, n(180.0)), "angle", ["<radian>"]],
+  "<arcminute>" :[["arcmin","arcminute","arcminutes"], div(PI, n(10800.0)), "angle", ["<radian>"]],
+  "<arcsecond>" :[["arcsec","arcsecond","arcseconds"], div(PI, n(648000.0)), "angle", ["<radian>"]],
   "<gradian>"   :[["gon","grad","gradian","grads"], div(PI, n(200.0)), "angle", ["<radian>"]],
   "<steradian>"  : [["sr","steradian","steradians"], n(1.0), "solid_angle", ["<steradian>"]],
 
