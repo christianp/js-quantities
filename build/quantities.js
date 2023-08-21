@@ -623,13 +623,14 @@ SOFTWARE.
     "<oersted>"  : [["Oe","oersted","oersteds"], div(n(250.0), PI), "magnetism", ["<ampere>"], ["<meter>"]],
 
     /* energy */
-    "<joule>" :  [["J","joule","Joule","joules"], n(1.0), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
+    "<joule>" :  [["J","joule","Joule","joules","Joules"], n(1.0), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<erg>"   :  [["erg","ergs"], n(1e-7), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<btu>"   :  [["BTU","btu","BTUs"], n(1055.056), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<calorie>" :  [["cal","calorie","calories"], n(4.18400), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<Calorie>" :  [["Cal","Calorie","Calories"], n(4184.00), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<therm-US>" : [["th","therm","therms","Therm","therm-US"], n(105480400), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
     "<Wh>" : [["Wh"], n(3600), "energy",["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
+    "<electronvolt>" : [["eV", "electronvolt", "electronvolts"], n(1.602176634E-19), "energy", ["<meter>","<meter>","<kilogram>"], ["<second>","<second>"]],
 
     /* force */
     "<newton>"  : [["N","Newton","newton"], n(1.0), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
@@ -642,6 +643,8 @@ SOFTWARE.
     /* angle */
     "<radian>" :[["rad","radian","radians"], n(1.0), "angle", ["<radian>"]],
     "<degree>" :[["deg","degree","degrees"], div(PI, n(180.0)), "angle", ["<radian>"]],
+    "<arcminute>" :[["arcmin","arcminute","arcminutes"], div(PI, n(10800.0)), "angle", ["<radian>"]],
+    "<arcsecond>" :[["arcsec","arcsecond","arcseconds"], div(PI, n(648000.0)), "angle", ["<radian>"]],
     "<gradian>"   :[["gon","grad","gradian","grads"], div(PI, n(200.0)), "angle", ["<radian>"]],
     "<steradian>"  : [["sr","steradian","steradians"], n(1.0), "solid_angle", ["<steradian>"]],
 
@@ -2438,7 +2441,7 @@ SOFTWARE.
     });
   }
 
-  Qty.version = "1.7.6";
+  Qty.version = "1.8.0";
 
   return Qty;
 
