@@ -206,6 +206,8 @@ export var UNITS = {
   "<newton>"  : [["N","Newton","newton"], n(1.0), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
   "<dyne>"  : [["dyn","dyne"], n(1e-5), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
   "<pound-force>"  : [["lbf","pound-force"], n(4.448222), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
+  "<kilogram-force>"  : [["kgf","kilogram-force", "kilopond", "kp"], n(9.80665), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
+  "<gram-force>"  : [["gf","gram-force"], n(9.80665E-3), "force", ["<kilogram>","<meter>"], ["<second>","<second>"]],
 
   /* frequency */
   "<hertz>" : [["Hz","hertz","Hertz"], n(1.0), "frequency", ["<1>"], ["<second>"]],
