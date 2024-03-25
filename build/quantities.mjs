@@ -485,7 +485,7 @@ var UNITS = {
   /* area */
   "<hectare>":[["hectare"], n(10000), "area", ["<meter>","<meter>"]],
   "<acre>":[["acre","acres"], n(4046.85642), "area", ["<meter>","<meter>"]],
-  "<sqft>":[["sqft"], n(1), "area", ["<foot>","<foot>"]],
+  "<sqft>":[["sqft"], n(0.09290304), "area", ["<foot>","<foot>"]],
 
   /* volume */
   "<liter>" : [["l","L","liter","liters","litre","litres"], n(0.001), "volume", ["<meter>","<meter>","<meter>"]],
