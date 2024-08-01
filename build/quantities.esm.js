@@ -432,13 +432,13 @@ var UNITS = {
   /* prefixes */
   "<googol>" : [["googol"], 1e100, "prefix"],
   "<kibi>"  :  [["Ki","Kibi","kibi"], pow(n(2),n(10)), "prefix"],
-  "<mebi>"  :  [["Mi","Mebi","mebi"], Math.pow(2,20), "prefix"],
-  "<gibi>"  :  [["Gi","Gibi","gibi"], Math.pow(2,30), "prefix"],
-  "<tebi>"  :  [["Ti","Tebi","tebi"], Math.pow(2,40), "prefix"],
-  "<pebi>"  :  [["Pi","Pebi","pebi"], Math.pow(2,50), "prefix"],
-  "<exi>"   :  [["Ei","Exi","exi"], Math.pow(2,60), "prefix"],
-  "<zebi>"  :  [["Zi","Zebi","zebi"], Math.pow(2,70), "prefix"],
-  "<yebi>"  :  [["Yi","Yebi","yebi"], Math.pow(2,80), "prefix"],
+  "<mebi>"  :  [["Mi","Mebi","mebi"], pow(n(2),n(20)), "prefix"],
+  "<gibi>"  :  [["Gi","Gibi","gibi"], pow(n(2),n(30)), "prefix"],
+  "<tebi>"  :  [["Ti","Tebi","tebi"], pow(n(2),n(40)), "prefix"],
+  "<pebi>"  :  [["Pi","Pebi","pebi"], pow(n(2),n(50)), "prefix"],
+  "<exi>"   :  [["Ei","Exi","exi"], pow(n(2),n(60)), "prefix"],
+  "<zebi>"  :  [["Zi","Zebi","zebi"], pow(n(2),n(70)), "prefix"],
+  "<yebi>"  :  [["Yi","Yebi","yebi"], pow(n(2),n(80)), "prefix"],
   "<yotta>" :  [["Y","Yotta","yotta"], n(1e24), "prefix"],
   "<zetta>" :  [["Z","Zetta","zetta"], n(1e21), "prefix"],
   "<exa>"   :  [["E","Exa","exa"], n(1e18), "prefix"],
@@ -596,7 +596,7 @@ var UNITS = {
 
   /* resistance */
   "<ohm>" :  [
-    ["Ohm","ohm","\u03A9"/*Ω as greek letter*/,"\u2126"/*Ω as ohm sign*/],
+    ["Ohm","ohm","Ohms","ohms","\u03A9"/*Ω as greek letter*/,"\u2126"/*Ω as ohm sign*/],
     n(1.0),
     "resistance",
     ["<meter>","<meter>","<kilogram>"],["<second>","<second>","<second>","<ampere>","<ampere>"]
@@ -1010,7 +1010,7 @@ var BOUNDARY_REGEX = "\\b|$";
 var UNIT_MATCH = "(" + PREFIX_REGEX + ")??(" +
                  UNIT_REGEX +
                  ")(?:" + BOUNDARY_REGEX + ")";
-var UNIT_TEST_REGEX = new RegExp("^\\s*(" + UNIT_MATCH + "[\\s\\*]*)+$");
+var UNIT_TEST_REGEX = new RegExp("^\\s*(" + UNIT_MATCH + "[\\s\\*/]*)+$");
 var UNIT_MATCH_REGEX = new RegExp(UNIT_MATCH, "g"); // g flag for multiple occurences
 var parsedUnitsCache = {};
 /**
