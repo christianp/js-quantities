@@ -172,7 +172,7 @@ export var UNITS = {
 
   /* resistance */
   "<ohm>" :  [
-    ["Ohm","ohm","\u03A9"/*Ω as greek letter*/,"\u2126"/*Ω as ohm sign*/],
+    ["Ohm","ohm","Ohms","ohms","\u03A9"/*Ω as greek letter*/,"\u2126"/*Ω as ohm sign*/],
     n(1.0),
     "resistance",
     ["<meter>","<meter>","<kilogram>"],["<second>","<second>","<second>","<ampere>","<ampere>"]
