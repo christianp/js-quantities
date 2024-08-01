@@ -1,6 +1,11 @@
 import Qty, { isQty } from "./constructor.js";
 import { BASE_UNITS, UNITY, UNITY_ARRAY } from "./definitions.js";
 import { assign, compareArray, isString } from "./utils.js";
+import { SIGNATURE_VECTOR, SIGNATURE_POWER } from "./signature.js";
+
+const angle_mask = (SIGNATURE_POWER - 1) * Math.pow(SIGNATURE_POWER, SIGNATURE_VECTOR.indexOf('angle'));
+const all_mask = Math.pow(SIGNATURE_POWER, SIGNATURE_VECTOR.length) - 1;
+const non_angle_mask = all_mask - angle_mask;
 
 assign(Qty.prototype, {
   // returns true if no associated units
@@ -30,7 +35,7 @@ assign(Qty.prototype, {
     }
 
     if (other.signature !== undefined) {
-      return this.signature === other.signature;
+      return (this.signature & non_angle_mask) === (other.signature & non_angle_mask);
     }
     else {
       return false;

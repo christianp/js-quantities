@@ -1878,7 +1878,6 @@ assign(Qty.prototype, {
   },
 
   mul: function(other) {
-    console.log(other);
     if (Field.isMember(other)) {
       return Qty({"scalar": Field.mulSafe(this.scalar, other), "numerator": this.numerator, "denominator": this.denominator});
     }
@@ -2108,6 +2107,10 @@ assign(Qty.prototype, {
   }
 });
 
+const angle_mask = (SIGNATURE_POWER - 1) * Math.pow(SIGNATURE_POWER, SIGNATURE_VECTOR.indexOf('angle'));
+const all_mask = Math.pow(SIGNATURE_POWER, SIGNATURE_VECTOR.length) - 1;
+const non_angle_mask = all_mask - angle_mask;
+
 assign(Qty.prototype, {
   // returns true if no associated units
   // false, even if the units are "unitless" like 'radians, each, etc'
@@ -2136,7 +2139,7 @@ assign(Qty.prototype, {
     }
 
     if (other.signature !== undefined) {
-      return this.signature === other.signature;
+      return (this.signature & non_angle_mask) === (other.signature & non_angle_mask);
     }
     else {
       return false;

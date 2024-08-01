@@ -382,6 +382,16 @@ describe("js-quantities", function() {
       expect(qty1.isCompatible(qty2)).toBe(true);
     });
 
+    it("should return true when comparing dimensionless quantities and angles", function() {
+      var qty1 = Qty('1');
+      var qty2 = Qty('2rad');
+      expect(qty1.isCompatible(qty2)).toBe(true);
+
+      var qty3 = Qty('1 N*m*rad/s');
+      var qty4 = Qty('1 W');
+      expect(qty3.isCompatible(qty4)).toBe(true);
+    });
+
     it("should return false with null or undefined", function() {
       var qty1 = Qty("1 m*kg/s");
 
