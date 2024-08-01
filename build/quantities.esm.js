@@ -813,7 +813,10 @@ function getAliases(unitName) {
   return UNITS[UNIT_MAP[unitName]][0];
 }
 
-var SIGNATURE_VECTOR = ["length", "time", "temperature", "mass", "current", "substance", "luminosity", "currency", "information", "angle"];
+const SIGNATURE_VECTOR = ["length", "time", "temperature", "mass", "current", "substance", "luminosity", "currency", "information", "angle"];
+const SIGNATURE_POWER = 32;
+
+const BASE_SIGNATURES = Object.fromEntries(SIGNATURE_VECTOR.map((name,i) => [name, Math.pow(SIGNATURE_POWER, i)]));
 
 /*
 calculates the unit signature id for use in comparing compatible units and simplification
@@ -829,16 +832,18 @@ function unitSignature() {
     return this.signature;
   }
   var vector = unitSignatureVector.call(this);
+  return unitSignatureFromVector(vector);
+}
+
+function unitSignatureFromVector(vector) {
+  let t = 1;
+  let signature = 0;
   for (var i = 0; i < vector.length; i++) {
-    vector[i] *= Math.pow(20, i);
+    signature += vector[i] * t;
+    t *= SIGNATURE_POWER;
   }
 
-  return vector.reduce(
-    function(previous, current) {
-      return previous + current;
-    },
-    0
-  );
+  return signature;
 }
 
 // calculates the unit signature vector used by unit_signature
@@ -870,6 +875,17 @@ function unitSignatureVector() {
     }
   }
   return vector;
+}
+
+/** Calculates the signature for a unit from a dictionary mapping dimensions to their powers.
+ */
+function unitSignatureFromDict(dimensions) {
+    var v = new Array(SIGNATURE_VECTOR.length);
+    for(let i=0; i<SIGNATURE_VECTOR.length; i++) {
+        v[i] = dimensions[SIGNATURE_VECTOR[i]] || 0;
+    }
+    const signature = unitSignatureFromVector(v);
+    return signature;
 }
 
 var SIGN = "[+-]";
@@ -1181,57 +1197,206 @@ function updateBaseScalar() {
   }
 }
 
-var KINDS = {
-  "-312078": "elastance",
-  "-312058": "resistance",
-  "-312038": "inductance",
-  "-152058": "potential",
-  "-152040": "magnetism",
-  "-152038": "magnetism",
-  "-7997": "specific_volume",
-  "-79": "snap",
-  "-59": "jolt",
-  "-39": "acceleration",
-  "-38": "radiation",
-  "-20": "frequency",
-  "-19": "speed",
-  "-18": "viscosity",
-  "-17": "volumetric_flow",
-  "-1": "wavenumber",
-  "0": "unitless",
-  "1": "length",
-  "2": "area",
-  "3": "volume",
-  "20": "time",
-  "400": "temperature",
-  "7941": "yank",
-  "7942": "power",
-  "7959": "pressure",
-  "7961": "force",
-  "7962": "energy",
-  "7979": "viscosity",
-  "7981": "momentum",
-  "7982": "angular_momentum",
-  "7997": "density",
-  "7998": "area_density",
-  "8000": "mass",
-  "152020": "radiation_exposure",
-  "159999": "magnetism",
-  "160000": "current",
-  "160020": "charge",
-  "312058": "conductance",
-  "312078": "capacitance",
-  "3199980": "activity",
-  "3199997": "molar_concentration",
-  "3200000": "substance",
-  "63999998": "illuminance",
-  "64000000": "luminous_power",
-  "1280000000": "currency",
-  "25599999980": "information_rate",
-  "25600000000": "information",
-  "511999999980": "angular_velocity",
-  "512000000000": "angle"
-};
+var KINDS_DICT = [
+  [
+    {  },
+    "unitless"
+  ],
+  [
+    { "length": 1 },
+    "length"
+  ],
+  [
+    { "length": 2 },
+    "area"
+  ],
+  [
+    { "length": 3 },
+    "volume"
+  ],
+  [
+    { "time": 1 },
+    "time"
+  ],
+  [
+    { "temperature": 1 },
+    "temperature"
+  ],
+  [
+    { "length": 1, "time": -3, "mass": 1 },
+    "yank"
+  ],
+  [
+    { "length": 2, "time": -3, "mass": 1 },
+    "power"
+  ],
+  [
+    { "length": -1, "time": -2, "mass": 1 },
+    "pressure"
+  ],
+  [
+    { "length": 1, "time": -2, "mass": 1 },
+    "force"
+  ],
+  [
+    { "length": 2, "time": -2, "mass": 1 },
+    "energy"
+  ],
+  [
+    { "length": -1, "time": -1, "mass": 1 },
+    "viscosity"
+  ],
+  [
+    { "length": 1, "time": -1, "mass": 1 },
+    "momentum"
+  ],
+  [
+    { "length": 2, "time": -1, "mass": 1 },
+    "angular_momentum"
+  ],
+  [
+    { "length": -3, "mass": 1 },
+    "density"
+  ],
+  [
+    { "length": -2, "mass": 1 },
+    "area_density"
+  ],
+  [
+    { "mass": 1 },
+    "mass"
+  ],
+  [
+    { "time": 1, "mass": -1, "current": 1 },
+    "radiation_exposure"
+  ],
+  [
+    { "length": -1, "current": 1 },
+    "magnetism"
+  ],
+  [
+    { "current": 1 },
+    "current"
+  ],
+  [
+    { "time": 1, "current": 1 },
+    "charge"
+  ],
+  [
+    { "length": -2, "time": 3, "mass": -1, "current": 2 },
+    "conductance"
+  ],
+  [
+    { "length": -2, "time": 4, "mass": -1, "current": 2 },
+    "capacitance"
+  ],
+  [
+    { "time": -1, "substance": 1 },
+    "activity"
+  ],
+  [
+    { "length": -3, "substance": 1 },
+    "molar_concentration"
+  ],
+  [
+    { "substance": 1 },
+    "substance"
+  ],
+  [
+    { "length": -2, "luminosity": 1 },
+    "illuminance"
+  ],
+  [
+    { "luminosity": 1 },
+    "luminous_power"
+  ],
+  [
+    { "currency": 1 },
+    "currency"
+  ],
+  [
+    { "length": 2, "time": -4, "mass": 1, "current": -2 },
+    "elastance"
+  ],
+  [
+    { "length": 2, "time": -3, "mass": 1, "current": -2 },
+    "resistance"
+  ],
+  [
+    { "length": 2, "time": -2, "mass": 1, "current": -2 },
+    "inductance"
+  ],
+  [
+    { "length": 2, "time": -3, "mass": 1, "current": -1 },
+    "potential"
+  ],
+  [
+    { "time": -2, "mass": 1, "current": -1 },
+    "magnetism"
+  ],
+  [
+    { "length": 2, "time": -2, "mass": 1, "current": -1 },
+    "magnetism"
+  ],
+  [
+    { "length": 3, "mass": -1 },
+    "specific_volume"
+  ],
+  [
+    { "length": 1, "time": -4 },
+    "snap"
+  ],
+  [
+    { "length": 1, "time": -3 },
+    "jolt"
+  ],
+  [
+    { "length": 1, "time": -2 },
+    "acceleration"
+  ],
+  [
+    { "length": 2, "time": -2 },
+    "radiation"
+  ],
+  [
+    { "time": -1 },
+    "frequency"
+  ],
+  [
+    { "length": 1, "time": -1 },
+    "speed"
+  ],
+  [
+    { "length": 2, "time": -1 },
+    "viscosity"
+  ],
+  [
+    { "length": 3, "time": -1 },
+    "volumetric_flow"
+  ],
+  [
+    { "length": -1 },
+    "wavenumber"
+  ],
+  [
+    { "time": -1, "information": 1 },
+    "information_rate"
+  ],
+  [
+    { "information": 1 },
+    "information"
+  ],
+  [
+    { "time": -1, "angle": 1 },
+    "angular_velocity"
+  ],
+  [
+    { "angle": 1 },
+    "angle"
+  ]
+];
+
+var KINDS = Object.fromEntries(KINDS_DICT.map(([dimensions, name]) => [ unitSignatureFromDict(dimensions), name ]));
 
 /**
  * Returns the list of available well-known kinds of units, e.g.
@@ -1252,7 +1417,7 @@ Qty.prototype.kind = function() {
 assign(Qty.prototype, {
   isDegrees: function() {
     // signature may not have been calculated yet
-    return (this.signature === null || this.signature === 400) &&
+    return (this.signature === null || this.signature === BASE_SIGNATURES["temperature"]) &&
       this.numerator.length === 1 &&
       compareArray(this.denominator, UNITY_ARRAY) &&
       (this.numerator[0].match(/<temp-[CFRK]>/) || this.numerator[0].match(/<(kelvin|celsius|rankine|fahrenheit)>/));
@@ -1656,11 +1821,15 @@ Qty.getAliases = getAliases;
 Qty.mulSafe = mulSafe;
 Qty.divSafe = divSafe;
 
+Qty.KINDS = KINDS;
 Qty.getKinds = getKinds;
 
 Qty.swiftConverter = swiftConverter;
 
 Qty.Error = QtyError;
+
+Qty.SIGNATURE_VECTOR = SIGNATURE_VECTOR;
+Qty.SIGNATURE_POWER = SIGNATURE_POWER;
 
 assign(Qty.prototype, {
   // Returns new instance with units of this
@@ -1730,7 +1899,7 @@ assign(Qty.prototype, {
 
     // so as not to confuse results, multiplication and division between temperature degrees will maintain original unit info in num/den
     // multiplication and division between deg[CFRK] can never factor each other out, only themselves: "degK*degC/degC^2" == "degK/degC"
-    if (op1.isCompatible(op2) && op1.signature !== 400) {
+    if (op1.isCompatible(op2) && op1.signature !== BASE_SIGNATURES["temperature"]) {
       op2 = op2.to(op1);
     }
     var numdenscale = cleanTerms(op1.numerator, op1.denominator, op2.numerator, op2.denominator);
@@ -1772,7 +1941,7 @@ assign(Qty.prototype, {
 
     // so as not to confuse results, multiplication and division between temperature degrees will maintain original unit info in num/den
     // multiplication and division between deg[CFRK] can never factor each other out, only themselves: "degK*degC/degC^2" == "degK/degC"
-    if (op1.isCompatible(op2) && op1.signature !== 400) {
+    if (op1.isCompatible(op2) && op1.signature !== BASE_SIGNATURES["temperature"]) {
       op2 = op2.to(op1);
     }
     var numdenscale = cleanTerms(op1.numerator, op1.denominator, op2.denominator, op2.numerator);

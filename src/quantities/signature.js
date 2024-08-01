@@ -1,6 +1,9 @@
 import { UNITS } from "./definitions.js";
 
-var SIGNATURE_VECTOR = ["length", "time", "temperature", "mass", "current", "substance", "luminosity", "currency", "information", "angle"];
+export const SIGNATURE_VECTOR = ["length", "time", "temperature", "mass", "current", "substance", "luminosity", "currency", "information", "angle"];
+export const SIGNATURE_POWER = 32;
+
+export const BASE_SIGNATURES = Object.fromEntries(SIGNATURE_VECTOR.map((name,i) => [name, Math.pow(SIGNATURE_POWER, i)]));
 
 /*
 calculates the unit signature id for use in comparing compatible units and simplification
@@ -16,16 +19,18 @@ export function unitSignature() {
     return this.signature;
   }
   var vector = unitSignatureVector.call(this);
+  return unitSignatureFromVector(vector);
+}
+
+function unitSignatureFromVector(vector) {
+  let t = 1;
+  let signature = 0;
   for (var i = 0; i < vector.length; i++) {
-    vector[i] *= Math.pow(20, i);
+    signature += vector[i] * t;
+    t *= SIGNATURE_POWER;
   }
 
-  return vector.reduce(
-    function(previous, current) {
-      return previous + current;
-    },
-    0
-  );
+  return signature;
 }
 
 // calculates the unit signature vector used by unit_signature
@@ -57,4 +62,15 @@ function unitSignatureVector() {
     }
   }
   return vector;
+}
+
+/** Calculates the signature for a unit from a dictionary mapping dimensions to their powers.
+ */
+export function unitSignatureFromDict(dimensions) {
+    var v = new Array(SIGNATURE_VECTOR.length);
+    for(let i=0; i<SIGNATURE_VECTOR.length; i++) {
+        v[i] = dimensions[SIGNATURE_VECTOR[i]] || 0;
+    }
+    const signature = unitSignatureFromVector(v);
+    return signature;
 }

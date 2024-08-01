@@ -1,6 +1,7 @@
 import Qty from "./constructor.js";
 import QtyError, { throwIncompatibleUnits } from "./error.js";
 import { PREFIX_VALUES, UNITY, UNITY_ARRAY } from "./definitions.js";
+import { BASE_SIGNATURES } from "./signature.js";
 import { assign, isNumber, isString } from "./utils.js";
 import { Field } from "./fields.js";
 import {
@@ -76,7 +77,7 @@ assign(Qty.prototype, {
 
     // so as not to confuse results, multiplication and division between temperature degrees will maintain original unit info in num/den
     // multiplication and division between deg[CFRK] can never factor each other out, only themselves: "degK*degC/degC^2" == "degK/degC"
-    if (op1.isCompatible(op2) && op1.signature !== 400) {
+    if (op1.isCompatible(op2) && op1.signature !== BASE_SIGNATURES["temperature"]) {
       op2 = op2.to(op1);
     }
     var numdenscale = cleanTerms(op1.numerator, op1.denominator, op2.numerator, op2.denominator);
@@ -118,7 +119,7 @@ assign(Qty.prototype, {
 
     // so as not to confuse results, multiplication and division between temperature degrees will maintain original unit info in num/den
     // multiplication and division between deg[CFRK] can never factor each other out, only themselves: "degK*degC/degC^2" == "degK/degC"
-    if (op1.isCompatible(op2) && op1.signature !== 400) {
+    if (op1.isCompatible(op2) && op1.signature !== BASE_SIGNATURES["temperature"]) {
       op2 = op2.to(op1);
     }
     var numdenscale = cleanTerms(op1.numerator, op1.denominator, op2.denominator, op2.numerator);

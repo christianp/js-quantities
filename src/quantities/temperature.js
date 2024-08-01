@@ -1,13 +1,14 @@
 import Qty from "./constructor.js";
 import { UNITY_ARRAY } from "./definitions.js";
 import QtyError from "./error.js";
+import { BASE_SIGNATURES } from "./signature.js";
 import { assign, compareArray } from "./utils.js";
 import { Field } from "./fields.js";
 
 assign(Qty.prototype, {
   isDegrees: function() {
     // signature may not have been calculated yet
-    return (this.signature === null || this.signature === 400) &&
+    return (this.signature === null || this.signature === BASE_SIGNATURES["temperature"]) &&
       this.numerator.length === 1 &&
       compareArray(this.denominator, UNITY_ARRAY) &&
       (this.numerator[0].match(/<temp-[CFRK]>/) || this.numerator[0].match(/<(kelvin|celsius|rankine|fahrenheit)>/));
