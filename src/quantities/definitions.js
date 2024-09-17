@@ -6,7 +6,7 @@ const { PI, pow, mul, div } = Field;
 
 export var UNITS = {
   /* prefixes */
-  "<googol>" : [["googol"], 1e100, "prefix"],
+  "<googol>" : [["googol"], pow(n(10),n(100)), "prefix"],
   "<kibi>"  :  [["Ki","Kibi","kibi"], pow(n(2),n(10)), "prefix"],
   "<mebi>"  :  [["Mi","Mebi","mebi"], pow(n(2),n(20)), "prefix"],
   "<gibi>"  :  [["Gi","Gibi","gibi"], pow(n(2),n(30)), "prefix"],
@@ -150,7 +150,7 @@ export var UNITS = {
   /* substance */
   "<mole>"  :  [["mol","mole"], n(1.0), "substance", ["<mole>"]],
 
-  /* concentration */
+  /* molar_concentration */
   "<molar>" : [["M","molar"], n(1000), "molar_concentration", ["<mole>"], ["<meter>","<meter>","<meter>"]],
   "<wtpercent>"  : [["wt%","wtpercent"], n(10), "molar_concentration", ["<kilogram>"], ["<meter>","<meter>","<meter>"]],
 
