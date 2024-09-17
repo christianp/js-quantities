@@ -17,22 +17,25 @@ describe("js-quantities", function() {
   var lt = field.lt;
   var pow = field.pow;
   var env = jasmine.getEnv();
-  env.addEqualityTester(function(a, b) {
-    if (!(field.isMember(a) && field.isMember(b))) {
-      return;
-    }
-    return field.eq(a,b);
+  beforeEach(() => {
+    env.addCustomEqualityTester(function(a, b) {
+      if (!(field.isMember(a) && field.isMember(b))) {
+        return;
+      }
+      return field.eq(a,b);
+    });
+    jasmine.addMatchers({
+      toBeCloseInFieldTo: function() {
+        return {
+          compare: function(expected, precision) {
+            return lt(abs(sub(this.actual, expected)), pow(n(10),n(-precision)));
+          }
+        };
+      }
+    });
   });
 
   describe("initialization", function() {
-    beforeEach(function() {
-      this.addMatchers({
-        toBeCloseInFieldTo: function(expected, precision) {
-          return lt(abs(sub(this.actual, expected)), pow(n(10),n(-precision)));
-        }
-      });
-    });
-
     it("should create unit only", function() {
       var qty = Qty("m");
       expect(qty.numerator).toEqual(["<meter>"]);
@@ -384,12 +387,12 @@ describe("js-quantities", function() {
     });
 
     it("should return true when comparing dimensionless quantities and angles", function() {
-      var qty1 = Qty('1');
-      var qty2 = Qty('2rad');
+      var qty1 = Qty("1");
+      var qty2 = Qty("2rad");
       expect(qty1.isCompatible(qty2)).toBe(true);
 
-      var qty3 = Qty('1 N*m*rad/s');
-      var qty4 = Qty('1 W');
+      var qty3 = Qty("1 N*m*rad/s");
+      var qty4 = Qty("1 W");
       expect(qty3.isCompatible(qty4)).toBe(true);
     });
 
@@ -408,14 +411,6 @@ describe("js-quantities", function() {
   });
 
   describe("conversion", function() {
-    beforeEach(function() {
-      this.addMatchers({
-        toBeCloseInFieldTo: function(expected, precision) {
-          return lt(abs(sub(this.actual, expected)), pow(n(10),n(-precision)));
-        }
-      });
-    });
-
     it("should convert to base units", function() {
       var qty = Qty("100 cm");
       expect(qty.toBase().scalar).toEqual(n(1));
@@ -934,14 +929,6 @@ describe("js-quantities", function() {
   });
 
   describe("math with temperatures", function() {
-    beforeEach(function() {
-      this.addMatchers({
-        toBeCloseInFieldTo: function(expected, precision) {
-          return lt(abs(sub(this.actual, expected)), pow(n(10),n(-precision)));
-        }
-      });
-    });
-
     it("should add temperature degrees", function() {
       var qty = Qty("2degC");
       expect(qty.add("3degF").scalar).toBeCloseInFieldTo(div(n(11), n(3)), 10);

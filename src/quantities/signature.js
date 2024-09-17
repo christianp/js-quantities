@@ -64,13 +64,13 @@ function unitSignatureVector() {
   return vector;
 }
 
-/** Calculates the signature for a unit from a dictionary mapping dimensions to their powers.
+/* Calculates the signature for a unit from a dictionary mapping dimensions to their powers.
  */
 export function unitSignatureFromDict(dimensions) {
-    var v = new Array(SIGNATURE_VECTOR.length);
-    for(let i=0; i<SIGNATURE_VECTOR.length; i++) {
-        v[i] = dimensions[SIGNATURE_VECTOR[i]] || 0;
-    }
-    const signature = unitSignatureFromVector(v);
-    return signature;
+  var v = new Array(SIGNATURE_VECTOR.length);
+  for (let i = 0; i < SIGNATURE_VECTOR.length; i++) {
+    v[i] = dimensions[SIGNATURE_VECTOR[i]] || 0;
+  }
+  const signature = unitSignatureFromVector(v);
+  return signature;
 }

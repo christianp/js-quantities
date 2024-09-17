@@ -51,7 +51,6 @@
         "number": false
       }
     ],
-    "no-bitwise": "error",
     "no-mixed-spaces-and-tabs": "error",
     "no-multiple-empty-lines": "error",
     "no-trailing-spaces": "error",

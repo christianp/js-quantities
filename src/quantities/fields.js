@@ -54,185 +54,187 @@ const NumberField = fields.NumberField = {
 export let Field = NumberField;
 
 try {
-    const D = Decimal;
-    class DecimalFraction {
-      constructor(n,d) {
-        if (!Decimal.isDecimal(n)) {
-          n = new Decimal(n);
-        }
-        if (!Decimal.isDecimal(d)) {
-          d = new Decimal(d);
-        }
-        this.n = n;
-        this.d = d;
-      }
+  const Decimal = window.Decimal;
 
-      toString() {
-        return this.toDecimal().toString();
+  class DecimalFraction {
+    constructor(n,d) {
+      if (!Decimal.isDecimal(n)) {
+        n = new Decimal(n);
       }
-
-      toDecimal() {
-        if (this.d.eq(1)) {
-          return this.n;
-        }
-        else {
-          return this.n.div(this.d);
-        }
+      if (!Decimal.isDecimal(d)) {
+        d = new Decimal(d);
       }
+      this.n = n;
+      this.d = d;
+    }
 
-      plus(b) {
-        return new DecimalFraction(this.n.mul(b.d).add(b.n.mul(this.d)),this.d.mul(b.d));
+    toString() {
+      return this.toDecimal().toString();
+    }
+
+    toDecimal() {
+      if (this.d.eq(1)) {
+        return this.n;
       }
-
-      minus(b) {
-        return new DecimalFraction(this.n.mul(b.d).sub(b.n.mul(this.d)),this.d.mul(b.d));
-      }
-
-      times(b) {
-        return new DecimalFraction(this.n.mul(b.n), this.d.mul(b.d));
-      }
-
-      dividedBy(b) {
-        return new DecimalFraction(this.n.mul(b.d), this.d.mul(b.n));
-      }
-
-      inverse() {
-        return new DecimalFraction(this.d,this.n);
-      }
-
-      isZero() {
-        return this.n.isZero();
-      }
-
-      round() {
-        return new DecimalFraction(this.toDecimal().round(), new Decimal(1));
-      }
-
-      toDecimalPlaces(decimals) {
-        return new DecimalFraction(this.toDecimal().toDecimalPlaces(decimals), new Decimal(1));
-      }
-
-      toSignificantDigits(digits) {
-        return new DecimalFraction(this.toDecimal().toSignificantDigits(digits), new Decimal(1));
-      }
-
-      lessThan(b) {
-        return this.toDecimal().lessThan(b.toDecimal());
-      }
-
-      greaterThan(b) {
-        return this.toDecimal().greaterThan(b.toDecimal());
-      }
-
-      equals(b) {
-        return this.toDecimal().equals(b.toDecimal());
-      }
-
-      toPower(b) {
-        return new DecimalFraction(this.n.toPower(b.toDecimal()), this.d.toPower(b.toDecimal()));
-      }
-
-      abs() {
-        return new DecimalFraction(this.n.absoluteValue(), this.d.absoluteValue());
+      else {
+        return this.n.div(this.d);
       }
     }
 
-    function fr(n) {
-        if(!(n instanceof DecimalFraction)) {
-            return new DecimalFraction(n,1);
-        }
-        return n;
+    plus(b) {
+      return new DecimalFraction(this.n.mul(b.d).add(b.n.mul(this.d)),this.d.mul(b.d));
     }
 
-    const DecimalOne = new DecimalFraction(1,1);
-    const DecimalZero = new DecimalFraction(0,1);
-    const DecimalField = fields.DecimalField = {
+    minus(b) {
+      return new DecimalFraction(this.n.mul(b.d).sub(b.n.mul(this.d)),this.d.mul(b.d));
+    }
 
-      isMember: (n) => {
-        return n instanceof DecimalFraction || n instanceof Decimal;
-      },
+    times(b) {
+      return new DecimalFraction(this.n.mul(b.n), this.d.mul(b.d));
+    }
 
-      fromString: (s) => {
-        return new DecimalFraction(new Decimal(s), 1);
-      },
+    dividedBy(b) {
+      return new DecimalFraction(this.n.mul(b.d), this.d.mul(b.n));
+    }
 
-      fromNumber: (n) => {
-        return (new DecimalFraction(n,1)).toDecimalPlaces(12);
-      },
+    inverse() {
+      return new DecimalFraction(this.d,this.n);
+    }
 
-      toNumber: (n) => {
-        return n.toDecimal().toNumber();
-      },
+    isZero() {
+      return this.n.isZero();
+    }
 
-      one: () => {
-        return DecimalOne;
-      },
+    round() {
+      return new DecimalFraction(this.toDecimal().round(), new Decimal(1));
+    }
 
-      zero: () => {
-        return DecimalZero;
-      },
+    toDecimalPlaces(decimals) {
+      return new DecimalFraction(this.toDecimal().toDecimalPlaces(decimals), new Decimal(1));
+    }
 
-      add: (a,b) => {
-        return fr(a).plus(fr(b));
-      },
+    toSignificantDigits(digits) {
+      return new DecimalFraction(this.toDecimal().toSignificantDigits(digits), new Decimal(1));
+    }
 
-      sub: (a,b) => {
-        return fr(a).minus(fr(b));
-      },
+    lessThan(b) {
+      return this.toDecimal().lessThan(b.toDecimal());
+    }
 
-      mul: function() {
-        let result = DecimalOne;
-        for (var i = 0; i < arguments.length; i++) {
-          result = result.times(fr(arguments[i]));
-        }
-        return result;
-      },
+    greaterThan(b) {
+      return this.toDecimal().greaterThan(b.toDecimal());
+    }
 
-      div: (a,b) => {
-        return fr(a).dividedBy(fr(b));
-      },
+    equals(b) {
+      return this.toDecimal().equals(b.toDecimal());
+    }
 
-      inverse: (n) => {
-        return fr(n).inverse();
-      },
+    toPower(b) {
+      return new DecimalFraction(this.n.toPower(b.toDecimal()), this.d.toPower(b.toDecimal()));
+    }
 
-      isExactlyZero: (n) => {
-        return fr(n).isZero();
-      },
+    abs() {
+      return new DecimalFraction(this.n.absoluteValue(), this.d.absoluteValue());
+    }
+  }
 
-      round: (n) => {
-        return fr(n).round();
-      },
+  function fr(n) {
+    if (!(n instanceof DecimalFraction)) {
+      return new DecimalFraction(n,1);
+    }
+    return n;
+  }
 
-      roundTo: (n,decimals) => {
-        return fr(n).toDecimalPlaces(decimals);
-      },
+  const DecimalOne = new DecimalFraction(1,1);
+  const DecimalZero = new DecimalFraction(0,1);
+  const DecimalField = fields.DecimalField = {
 
-      lt: (a,b) => {
-        return fr(a).lessThan(fr(b));
-      },
+    isMember: (n) => {
+      return n instanceof DecimalFraction || n instanceof Decimal;
+    },
 
-      gt: (a,b) => {
-        return fr(a).greaterThan(fr(b));
-      },
+    fromString: (s) => {
+      return new DecimalFraction(new Decimal(s), 1);
+    },
 
-      eq: (a,b) => {
-        return fr(a).equals(fr(b));
-      },
+    fromNumber: (n) => {
+      return (new DecimalFraction(n,1)).toDecimalPlaces(12);
+    },
 
-      pow: (a,b) => {
-        return fr(a).toPower(fr(b));
-      },
+    toNumber: (n) => {
+      return n.toDecimal().toNumber();
+    },
 
-      abs: (n) => {
-        return fr(n).abs();
-      },
+    one: () => {
+      return DecimalOne;
+    },
 
-      PI: new DecimalFraction(Decimal.acos(-1),1),
-    };
-    DecimalField.divSafe = DecimalField.div;
-    DecimalField.mulSafe = DecimalField.mul;
+    zero: () => {
+      return DecimalZero;
+    },
 
-    Field = DecimalField;
-} catch(e) {
+    add: (a,b) => {
+      return fr(a).plus(fr(b));
+    },
+
+    sub: (a,b) => {
+      return fr(a).minus(fr(b));
+    },
+
+    mul: function() {
+      let result = DecimalOne;
+      for (var i = 0; i < arguments.length; i++) {
+        result = result.times(fr(arguments[i]));
+      }
+      return result;
+    },
+
+    div: (a,b) => {
+      return fr(a).dividedBy(fr(b));
+    },
+
+    inverse: (n) => {
+      return fr(n).inverse();
+    },
+
+    isExactlyZero: (n) => {
+      return fr(n).isZero();
+    },
+
+    round: (n) => {
+      return fr(n).round();
+    },
+
+    roundTo: (n,decimals) => {
+      return fr(n).toDecimalPlaces(decimals);
+    },
+
+    lt: (a,b) => {
+      return fr(a).lessThan(fr(b));
+    },
+
+    gt: (a,b) => {
+      return fr(a).greaterThan(fr(b));
+    },
+
+    eq: (a,b) => {
+      return fr(a).equals(fr(b));
+    },
+
+    pow: (a,b) => {
+      return fr(a).toPower(fr(b));
+    },
+
+    abs: (n) => {
+      return fr(n).abs();
+    },
+
+    PI: new DecimalFraction(Decimal.acos(-1),1),
+  };
+  DecimalField.divSafe = DecimalField.div;
+  DecimalField.mulSafe = DecimalField.mul;
+
+  Field = DecimalField;
+}
+catch (e) {
 }

@@ -137,9 +137,8 @@ assign(Qty.prototype, {
     }
 
     var precRoundedResult = Field.mulSafe(Field.round(
-        Field.div(this.scalar, precQuantity.scalar)),
-        precQuantity.scalar
-    );
+      Field.div(this.scalar, precQuantity.scalar)),
+    precQuantity.scalar);
 
     return Qty(precRoundedResult, this.units());
   }
